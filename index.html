@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Central</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+  <body>
+    <div class="scanlines"></div>
+    <main class="terminal-shell">
+      <header class="topbar">
+        <div>
+          <p class="classified">SISTEMA CENTRAL // ACCESO RESTRINGIDO</p>
+          <h1>INTERFAZ DE OPERACIONES</h1>
+          <p class="help-text">Accede a la información de los diferentes sistemas para consultar, modificar y eliminar datos.</p>
+        </div>
+        <div id="status-panel" class="status-panel status-online">
+          <span class="status-dot"></span>
+          <div>
+            <span id="system-status">SISTEMA EN LÍNEA</span>
+            <strong id="battery-level">100%</strong>
+          </div>
+        </div>
+      </header>
+
+      <section class="mission-progress">
+        <div class="mission-progress__header">
+          <div>
+            <span class="mission-progress__label">PROGRESO</span>
+            <strong id="mission-progress-text">0 / 9 MISIONES</strong>
+          </div>
+
+          <span id="mission-progress-percent">0%</span>
+        </div>
+
+        <div id="mission-progress-list" class="mission-progress__list">
+          <!-- Los indicadores se generan con JavaScript -->
+        </div>
+
+        <div class="mission-progress__bar">
+          <div id="mission-progress-fill" class="mission-progress__fill"></div>
+        </div>
+      </section>
+      
+      <section class="module request-module">
+        <div class="module-header"><span>01</span><h2>Solicitud</h2></div>
+        <label for="endpoint" class="field-label">URL</label>
+        <div class="url-input">
+          <span class="url-prefix">https://</span>
+          <input id="endpoint" autocomplete="off" spellcheck="false">
+        </div>
+        <button id="execute" class="execute-button" type="button">▶ EJECUTAR CONSULTA</button>
+      </section>
+
+      <section class="module response-module">
+        <div class="module-header response-heading">
+          <div class="module-title"><span>02</span><h2>Respuesta del sistema</h2></div>
+          <span id="response-code" class="response-code code-neutral">---</span>
+        </div>
+        <div class="response-field">
+          <span class="field-label">Mensaje</span>
+          <p id="response-message">Esperando ejecución de solicitud...</p>
+        </div>
+        <div id="response-info-wrapper" class="response-field hidden">
+          <span class="field-label">Información recuperada</span>
+          <div class="table-shell"><table id="response-table"></table></div>
+        </div>
+      </section>
+
+      <footer class="footer-status">
+        <span>RED: GOV-NET</span>
+        <span>PROTOCOLO: HTTPS</span>
+        <span>NIVEL DE ACCESO: OPERADOR</span>
+      </footer>
+    </main>
+
+    <div id="mission-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+      <div class="mission-modal">
+        <p class="classified">ESTADO DE MISIÓN</p>
+        <h2 id="modal-title"></h2>
+        <p id="modal-message"></p>
+        <button id="modal-restart" class="execute-button modal-button" type="button">NUEVA PARTIDA</button>
+      </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
