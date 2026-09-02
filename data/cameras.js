@@ -128,7 +128,3 @@ export function resetCameras() {
 
   initializeCameras();
 }
-
-export function clearCameraStorage() {
-  localStorage.removeItem(STORAGE_KEY);
-}

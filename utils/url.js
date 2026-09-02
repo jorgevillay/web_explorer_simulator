@@ -67,6 +67,12 @@ export function getEndpointDefinition(parsed, endpointDefinitions) {
   const endpoint = endpointDefinitions[parsed.path];
   if (!endpoint) return null;
 
+  if (endpoint.domain !== parsed.domain) {
+    throw new Error(
+      `El dominio de la solicitud no coincide con el dominio esperado para este endpoint`,
+    );
+  }
+
   const missing = endpoint.requiredParams.some(
     (key) => !(key in parsed.params),
   );

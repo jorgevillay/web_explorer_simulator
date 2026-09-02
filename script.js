@@ -1,3 +1,4 @@
+import { initializeCitizens, resetCitizens } from "./data/citizens.js";
 import { initializeCameras, resetCameras } from "./data/cameras.js";
 import { initializeAlerts, resetAlerts } from "./data/alerts.js";
 import {
@@ -14,7 +15,7 @@ import {
   getEndpointDefinition,
 } from "./utils/url.js";
 
-const BATTERY_COST = 5;
+const BATTERY_COST = 2;
 let gameEnded = false;
 let battery = getBattery();
 
@@ -288,6 +289,7 @@ function resetGame() {
   responseInfoWrapper.classList.add("hidden");
   responseTable.innerHTML = "";
   enableExecuteButton();
+  resetCitizens();
   resetCameras();
   resetAlerts();
   resetStorage();
@@ -303,6 +305,7 @@ executeButton.addEventListener("click", executeEndpoint);
 modalRestart.addEventListener("click", resetGame);
 enableExecuteButton();
 updateBatteryDisplay();
+initializeCitizens();
 initializeCameras();
 initializeAlerts();
 initializeMissionProgress();

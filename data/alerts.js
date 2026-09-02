@@ -120,7 +120,3 @@ export function resetAlerts() {
 
   initializeAlerts();
 }
-
-export function clearAlertStorage() {
-  localStorage.removeItem(STORAGE_KEY);
-}

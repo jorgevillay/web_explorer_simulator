@@ -69,7 +69,3 @@ export function resetMissions() {
 
   return initializeMissions();
 }
-
-export function clearMissionStorage() {
-  localStorage.removeItem(STORAGE_KEY);
-}

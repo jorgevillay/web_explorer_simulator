@@ -1,3 +1,4 @@
+import { getAllCitizens } from "../data/citizens.js";
 import {
   getAllCameras,
   getCameraByCode,
@@ -20,7 +21,25 @@ import {
 } from "./storage.js";
 
 export const endpointDefinitions = {
+  "listar/ciudadanos": {
+    domain: "registro.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de ciudadanos enviado correctamente",
+      info: () =>
+        getAllCitizens().map((citizen) => ({
+          Cédula: citizen.cedula,
+          Nombre: citizen.nombre,
+          "Fecha de nacimiento": citizen.fechaNacimiento,
+          Sexo: citizen.sexo,
+          "Estado civil": citizen.estadoCivil,
+          Ubicación: citizen.ubicacion,
+        })),
+    },
+  },
   "listar/camaras": {
+    domain: "vigilancia.gov",
     requiredParams: [],
     response: {
       code: 200,
@@ -35,6 +54,7 @@ export const endpointDefinitions = {
     },
   },
   "agregar/camara": {
+    domain: "vigilancia.gov",
     requiredParams: ["ubicacion", "tipo"],
     response: {
       code: 200,
@@ -64,6 +84,7 @@ export const endpointDefinitions = {
     },
   },
   "activar/camara": {
+    domain: "vigilancia.gov",
     requiredParams: ["codigo"],
     response: {
       code: 200,
@@ -81,6 +102,7 @@ export const endpointDefinitions = {
     },
   },
   "desactivar/camara": {
+    domain: "vigilancia.gov",
     requiredParams: ["codigo"],
     response: {
       code: 200,
@@ -106,6 +128,7 @@ export const endpointDefinitions = {
     },
   },
   "listar/alertas": {
+    domain: "vigilancia.gov",
     requiredParams: [],
     response: {
       code: 200,
@@ -124,6 +147,7 @@ export const endpointDefinitions = {
     },
   },
   "crear/alerta": {
+    domain: "vigilancia.gov",
     requiredParams: ["camara", "nivel", "descripcion"],
     response: {
       code: 200,
@@ -163,6 +187,7 @@ export const endpointDefinitions = {
     },
   },
   "modificar/alerta": {
+    domain: "vigilancia.gov",
     requiredParams: ["id", "nivel"],
     response: {
       code: 200,
@@ -177,6 +202,7 @@ export const endpointDefinitions = {
     },
   },
   "borrar/alerta": {
+    domain: "vigilancia.gov",
     requiredParams: ["id"],
     response: {
       code: 200,
