@@ -37,7 +37,7 @@ export function initializePrisoners() {
       ciudadano: "1023456786",
       estado: "Cumpliendo sentencia",
       fechaCaptura: "2087-06-11",
-      cargos: "Acceso no autorizado",
+      cargos: "Conspiración para cometer delitos",
       oficial: "OFI-001",
     },
     {
@@ -71,6 +71,12 @@ export function getPrisonerByCode(codigo) {
   return prisoners.find((prisoner) => prisoner.codigo === codigo);
 }
 
+export function getPrisonersByOfficer(placa) {
+  const prisoners = getAllPrisoners();
+
+  return prisoners.filter((prisoner) => prisoner.oficial === placa);
+}
+
 export function updatePrisoner(codigo, updatedData) {
   const prisoners = getAllPrisoners();
 
@@ -89,20 +95,6 @@ export function updatePrisoner(codigo, updatedData) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(prisoners));
 
   return prisoners[index];
-}
-
-export function deletePrisoner(codigo) {
-  const prisoners = getAllPrisoners();
-
-  const filtered = prisoners.filter((prisoner) => prisoner.codigo !== codigo);
-
-  if (filtered.length === prisoners.length) {
-    throw new Error(`El prisionero ${codigo} no existe`);
-  }
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-
-  return true;
 }
 
 export function resetPrisoners() {

@@ -32,6 +32,23 @@ import {
   updateTicket,
 } from "../data/tickets.js";
 import {
+  getAllPrisoners,
+  getPrisonerByCode,
+  getPrisonersByOfficer,
+  updatePrisoner,
+} from "../data/prisoners.js";
+import {
+  getAllCells,
+  getCellByNumber,
+  getCellByPrisoner,
+  updateCell,
+} from "../data/cells.js";
+import {
+  getAllOfficers,
+  getOfficerByBadge,
+  deleteOfficer,
+} from "../data/police.js";
+import {
   camerasCount,
   alertsCount,
   transactionsCount,
@@ -421,6 +438,159 @@ export const endpointDefinitions = {
           throw new Error(`La multa ${id} no existe`);
         }
         updateTicket(id, { estado });
+      },
+    },
+  },
+  "listar/prisioneros": {
+    domain: "defensa.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de prisioneros enviado correctamente",
+      info: () =>
+        getAllPrisoners().map((prisionero) => {
+          const fecha = new Date(prisionero.fechaCaptura);
+          return {
+            Código: prisionero.codigo,
+            Ciudadano: prisionero.ciudadano,
+            Estado: prisionero.estado,
+            "Fecha de captura": fecha.toLocaleString("es-ES"),
+            Cargos: prisionero.cargos,
+            "Oficial a cargo": prisionero.oficial,
+          };
+        }),
+    },
+  },
+  "modificar/prisionero": {
+    domain: "defensa.gov",
+    requiredParams: ["codigo"],
+    optionalParams: ["estado", "oficial"],
+    response: {
+      code: 200,
+      message: ({ codigo }) =>
+        `El prisionero ${codigo} fue modificado correctamente`,
+      process: ({ codigo, estado, oficial }) => {
+        const prisoner = getPrisonerByCode(codigo);
+        if (!prisoner) {
+          throw new Error(`El prisionero ${codigo} no existe`);
+        }
+        if (estado === "Liberado") {
+          const cell = getCellByPrisoner(codigo);
+          if (cell) {
+            throw new Error(
+              `El prisionero ${codigo} no puede ser liberado mientras esté asignado a una celda`,
+            );
+          }
+          updatePrisoner(codigo, { estado });
+        } else if (estado) {
+          updatePrisoner(codigo, { estado });
+        }
+        if (oficial) {
+          const officer = getOfficerByBadge(oficial);
+          if (!officer) {
+            throw new Error(`El oficial ${oficial} no existe`);
+          }
+          updatePrisoner(codigo, { oficial });
+        }
+      },
+    },
+  },
+  "listar/celdas": {
+    domain: "defensa.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de celdas enviado correctamente",
+      info: () =>
+        getAllCells().map((celda) => ({
+          Número: celda.numero,
+          Prisionero: celda.prisionero || "Vacía",
+          "Nivel de seguridad": celda.seguridad,
+          Sector: celda.sector,
+        })),
+    },
+  },
+  "liberar/celda": {
+    domain: "defensa.gov",
+    requiredParams: ["numero"],
+    response: {
+      code: 200,
+      message: ({ numero }) => `La celda ${numero} fue liberada correctamente`,
+      process: ({ numero }) => {
+        const cell = getCellByNumber(numero);
+        if (!cell) {
+          throw new Error(`La celda ${numero} no existe`);
+        }
+        if (!cell.prisionero) {
+          throw new Error(`La celda ${numero} ya está vacía`);
+        }
+        updateCell(numero, { prisionero: null });
+      },
+    },
+  },
+  "asignar/celda": {
+    domain: "defensa.gov",
+    requiredParams: ["numero", "prisionero"],
+    response: {
+      code: 200,
+      message: ({ numero, prisionero }) =>
+        `La celda ${numero} fue asignada correctamente al prisionero ${prisionero}`,
+      process: ({ numero, prisionero }) => {
+        const cell = getCellByNumber(numero);
+        if (!cell) {
+          throw new Error(`La celda ${numero} no existe`);
+        }
+        const prisoner = getPrisonerByCode(prisionero);
+        if (!prisoner) {
+          throw new Error(`El prisionero ${prisionero} no existe`);
+        }
+        if (prisoner.estado !== "Cumpliendo sentencia") {
+          throw new Error(
+            `El prisionero ${prisionero} no puede ser asignado a una celda porque no está cumpliendo sentencia`,
+          );
+        }
+        const currentCell = getCellByPrisoner(prisionero);
+        if (currentCell && currentCell.numero !== numero) {
+          throw new Error(
+            `El prisionero ${prisionero} ya está asignado a la celda ${currentCell.numero}`,
+          );
+        }
+        updateCell(numero, { prisionero: prisionero });
+      },
+    },
+  },
+  "listar/oficiales": {
+    domain: "defensa.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de oficiales enviado correctamente",
+      info: () =>
+        getAllOfficers().map((oficial) => ({
+          Placa: oficial.placa,
+          Ciudadano: oficial.ciudadano,
+          Rango: oficial.rango,
+        })),
+    },
+  },
+  "borrar/oficial": {
+    domain: "defensa.gov",
+    requiredParams: ["placa"],
+    response: {
+      code: 200,
+      message: ({ placa }) => `El oficial ${placa} fue eliminado correctamente`,
+      process: ({ placa }) => {
+        const officer = getOfficerByBadge(placa);
+        if (!officer) {
+          throw new Error(`El oficial ${placa} no existe`);
+        }
+        const prisioners = getPrisonersByOfficer(placa);
+        if (prisioners.length > 0) {
+          throw new Error(
+            `El oficial ${placa} no puede ser eliminado porque tiene prisioneros asignados`,
+          );
+        }
+        deleteOfficer(placa);
       },
     },
   },

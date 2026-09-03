@@ -77,7 +77,14 @@ export function getEndpointDefinition(parsed, endpointDefinitions) {
     (key) => !(key in parsed.params),
   );
 
-  if (missing) {
+  let hasOptionalParameters = true;
+  if (endpoint.optionalParams) {
+    hasOptionalParameters = endpoint.optionalParams.some(
+      (key) => key in parsed.params,
+    );
+  }
+
+  if (missing || !hasOptionalParameters) {
     throw new Error("Faltan parámetros requeridos para ejecutar la solicitud");
   }
 

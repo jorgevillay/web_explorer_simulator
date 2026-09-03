@@ -102,6 +102,44 @@ export function initializeMissions() {
       ],
       completed: false,
     },
+    {
+      id: 8,
+      goals: [
+        {
+          url: "defensa.gov/liberar/celda?numero=CEL-001",
+          executed: false,
+        },
+        {
+          url: "defensa.gov/modificar/prisionero?codigo=PRI-001&estado=Liberado",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
+    {
+      id: 9,
+      goals: [
+        {
+          url: "defensa.gov/modificar/prisionero?codigo=PRI-002&estado=Cumpliendo sentencia",
+          executed: false,
+        },
+        {
+          url: "defensa.gov/asignar/celda?numero=CEL-003&prisionero=PRI-002",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
+    {
+      id: 10,
+      goals: [
+        {
+          url: "defensa.gov/borrar/oficial?placa=OFI-002",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
   ];
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));

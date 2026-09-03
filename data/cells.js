@@ -65,6 +65,12 @@ export function getCellByNumber(numero) {
   return cells.find((cell) => cell.numero === numero);
 }
 
+export function getCellByPrisoner(prisionero) {
+  const cells = getAllCells();
+
+  return cells.find((cell) => cell.prisionero === prisionero);
+}
+
 export function updateCell(numero, updatedData) {
   const cells = getAllCells();
 
