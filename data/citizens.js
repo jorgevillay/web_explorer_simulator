@@ -33,6 +33,14 @@ export function initializeCitizens() {
       ubicacion: "Zona centro",
     },
     {
+      cedula: "1023456788",
+      nombre: "Ricardo Molina",
+      fechaNacimiento: "2046-07-23",
+      sexo: "M",
+      estadoCivil: "Casado",
+      ubicacion: "Zona sur",
+    },
+    {
       cedula: "1023456785",
       nombre: "Natalia Torres",
       fechaNacimiento: "2051-09-30",
@@ -40,7 +48,14 @@ export function initializeCitizens() {
       estadoCivil: "Divorciada",
       ubicacion: "Zona norte",
     },
-
+    {
+      cedula: "1023456789",
+      nombre: "Sofía Navarro",
+      fechaNacimiento: "2053-02-11",
+      sexo: "F",
+      estadoCivil: "Casada",
+      ubicacion: "Zona centro",
+    },
     {
       cedula: "1023456781",
       nombre: "Laura Mendoza",

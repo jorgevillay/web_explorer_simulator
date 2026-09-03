@@ -7,6 +7,9 @@ import {
   resetTransactions,
 } from "./data/transactions.js";
 import { initializeTickets, resetTickets } from "./data/tickets.js";
+import { initializeOfficers, resetOfficers } from "./data/police.js";
+import { initializePrisoners, resetPrisoners } from "./data/prisoners.js";
+import { initializeCells, resetCells } from "./data/cells.js";
 import {
   initializeMissions,
   saveMissionProgress,
@@ -301,6 +304,9 @@ function resetGame() {
   resetAccounts();
   resetTransactions();
   resetTickets();
+  resetOfficers();
+  resetPrisoners();
+  resetCells();
   resetStorage();
   battery = getBattery();
   missions = resetMissions();
@@ -320,4 +326,7 @@ initializeAlerts();
 initializeAccounts();
 initializeTransactions();
 initializeTickets();
+initializeOfficers();
+initializePrisoners();
+initializeCells();
 initializeMissionProgress();
