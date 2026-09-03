@@ -13,12 +13,20 @@ import {
   updateAlert,
   deleteAlert,
 } from "../data/alerts.js";
+import { getAllAccounts } from "../data/accounts.js";
+import { getAllTransactions } from "../data/transactions.js";
+import { getAllTickets } from "../data/tickets.js";
 import {
   camerasCount,
   alertsCount,
   updateCamerasCount,
   updateAlertsCount,
 } from "./storage.js";
+
+const currencyFormatter = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+});
 
 export const endpointDefinitions = {
   "listar/ciudadanos": {
@@ -28,14 +36,17 @@ export const endpointDefinitions = {
       code: 200,
       message: () => "Listado de ciudadanos enviado correctamente",
       info: () =>
-        getAllCitizens().map((citizen) => ({
-          Cédula: citizen.cedula,
-          Nombre: citizen.nombre,
-          "Fecha de nacimiento": citizen.fechaNacimiento,
-          Sexo: citizen.sexo,
-          "Estado civil": citizen.estadoCivil,
-          Ubicación: citizen.ubicacion,
-        })),
+        getAllCitizens().map((citizen) => {
+          const fecha = new Date(citizen.fechaNacimiento);
+          return {
+            Cédula: citizen.cedula,
+            Nombre: citizen.nombre,
+            "Fecha de nacimiento": fecha.toLocaleString("es-ES"),
+            Sexo: citizen.sexo,
+            "Estado civil": citizen.estadoCivil,
+            Ubicación: citizen.ubicacion,
+          };
+        }),
     },
   },
   "listar/camaras": {
@@ -210,6 +221,56 @@ export const endpointDefinitions = {
       process: ({ id }) => {
         deleteAlert(id);
       },
+    },
+  },
+  "listar/cuentas": {
+    domain: "finanzas.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de cuentas enviado correctamente",
+      info: () =>
+        getAllAccounts().map((account) => ({
+          "Número de cuenta": account.numero,
+          "Cédula del cliente": account.cliente,
+          Saldo: currencyFormatter.format(account.saldo),
+          Activa: account.activa ? "Sí" : "No",
+        })),
+    },
+  },
+  "listar/transacciones": {
+    domain: "finanzas.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de transacciones enviado correctamente",
+      info: () =>
+        getAllTransactions().map((transaction) => {
+          const fecha = new Date(transaction.fecha);
+          return {
+            ID: transaction.id,
+            "Número de cuenta": transaction.cuenta,
+            Monto: currencyFormatter.format(transaction.monto),
+            Tipo: transaction.tipo,
+            Fecha: fecha.toLocaleString("es-ES"),
+          };
+        }),
+    },
+  },
+  "listar/multas": {
+    domain: "finanzas.gov",
+    requiredParams: [],
+    response: {
+      code: 200,
+      message: () => "Listado de multas enviado correctamente",
+      info: () =>
+        getAllTickets().map((ticket) => ({
+          ID: ticket.id,
+          "Cédula del ciudadano": ticket.ciudadano,
+          Descripción: ticket.descripcion,
+          Valor: currencyFormatter.format(ticket.valor),
+          Estado: ticket.estado,
+        })),
     },
   },
 };

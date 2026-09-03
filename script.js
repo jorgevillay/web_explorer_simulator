@@ -1,6 +1,12 @@
 import { initializeCitizens, resetCitizens } from "./data/citizens.js";
 import { initializeCameras, resetCameras } from "./data/cameras.js";
 import { initializeAlerts, resetAlerts } from "./data/alerts.js";
+import { initializeAccounts, resetAccounts } from "./data/accounts.js";
+import {
+  initializeTransactions,
+  resetTransactions,
+} from "./data/transactions.js";
+import { initializeTickets, resetTickets } from "./data/tickets.js";
 import {
   initializeMissions,
   saveMissionProgress,
@@ -292,6 +298,9 @@ function resetGame() {
   resetCitizens();
   resetCameras();
   resetAlerts();
+  resetAccounts();
+  resetTransactions();
+  resetTickets();
   resetStorage();
   battery = getBattery();
   missions = resetMissions();
@@ -308,4 +317,7 @@ updateBatteryDisplay();
 initializeCitizens();
 initializeCameras();
 initializeAlerts();
+initializeAccounts();
+initializeTransactions();
+initializeTickets();
 initializeMissionProgress();

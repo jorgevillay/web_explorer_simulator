@@ -101,20 +101,6 @@ export function updateCamera(codigo, updatedData) {
   return cameras[index];
 }
 
-export function deleteCamera(codigo) {
-  const cameras = getAllCameras();
-
-  const filtered = cameras.filter((camera) => camera.codigo !== codigo);
-
-  if (filtered.length === cameras.length) {
-    throw new Error(`La cámara ${codigo} no existe`);
-  }
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
-
-  return true;
-}
-
 export function enableCamera(codigo) {
   updateCamera(codigo, { activa: true });
 }
