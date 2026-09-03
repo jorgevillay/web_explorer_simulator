@@ -40,7 +40,7 @@ export function initializeTransactions() {
       id: "TRA-005",
       cuenta: "CTA-007",
       monto: 3500000,
-      tipo: "Consignación",
+      tipo: "Retiro",
       fecha: "2087-06-15 08:13",
     },
     {

@@ -248,7 +248,7 @@ function renderResponse({ code, message, process, info }, params = {}) {
   else if (code === 500) responseCode.classList.add("code-server-error");
   else responseCode.classList.add("code-neutral");
 
-  let newCode;
+  let newCode = params;
   if (process) {
     newCode = process(params);
   }

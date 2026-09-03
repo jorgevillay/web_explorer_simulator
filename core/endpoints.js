@@ -13,14 +13,31 @@ import {
   updateAlert,
   deleteAlert,
 } from "../data/alerts.js";
-import { getAllAccounts } from "../data/accounts.js";
-import { getAllTransactions } from "../data/transactions.js";
-import { getAllTickets } from "../data/tickets.js";
+import {
+  getAllAccounts,
+  getAccountByNumber,
+  getAccountsByClient,
+  updateAccount,
+} from "../data/accounts.js";
+import {
+  getAllTransactions,
+  getTransactionById,
+  getTransactionsByAccount,
+  createTransaction,
+} from "../data/transactions.js";
+import {
+  getAllTickets,
+  getTicketById,
+  getTicketsByCitizen,
+  updateTicket,
+} from "../data/tickets.js";
 import {
   camerasCount,
   alertsCount,
+  transactionsCount,
   updateCamerasCount,
   updateAlertsCount,
+  updateTransactionsCount,
 } from "./storage.js";
 
 const currencyFormatter = new Intl.NumberFormat("es-CO", {
@@ -238,6 +255,22 @@ export const endpointDefinitions = {
         })),
     },
   },
+  "cuentas/cliente": {
+    domain: "finanzas.gov",
+    requiredParams: ["cedula"],
+    response: {
+      code: 200,
+      message: ({ cedula }) =>
+        `Listado de cuentas del cliente ${cedula} enviado correctamente`,
+      info: ({ cedula }) =>
+        getAccountsByClient(cedula).map((account) => ({
+          "Número de cuenta": account.numero,
+          "Cédula del cliente": account.cliente,
+          Saldo: currencyFormatter.format(account.saldo),
+          Activa: account.activa ? "Sí" : "No",
+        })),
+    },
+  },
   "listar/transacciones": {
     domain: "finanzas.gov",
     requiredParams: [],
@@ -257,6 +290,92 @@ export const endpointDefinitions = {
         }),
     },
   },
+  "transacciones/cuenta": {
+    domain: "finanzas.gov",
+    requiredParams: ["numero"],
+    response: {
+      code: 200,
+      message: ({ numero }) =>
+        `Listado de transacciones para la cuenta ${numero} enviado correctamente`,
+      info: ({ numero }) =>
+        getTransactionsByAccount(numero).map((transaction) => {
+          const fecha = new Date(transaction.fecha);
+          return {
+            ID: transaction.id,
+            "Número de cuenta": transaction.cuenta,
+            Monto: currencyFormatter.format(transaction.monto),
+            Tipo: transaction.tipo,
+            Fecha: fecha.toLocaleString("es-ES"),
+          };
+        }),
+    },
+  },
+  "crear/transaccion": {
+    domain: "finanzas.gov",
+    requiredParams: ["cuenta", "monto", "tipo"],
+    response: {
+      code: 200,
+      message: () => "Nueva transacción creada correctamente",
+      process: ({ cuenta, monto, tipo }) => {
+        if (!cuenta || !monto || !tipo) {
+          throw new Error(
+            "Hace falta información obligatoria para crear la transacción",
+          );
+        }
+        if (tipo !== "Consignación" && tipo !== "Retiro") {
+          throw new Error(
+            "El tipo de transacción debe ser 'Consignación' o 'Retiro'",
+          );
+        }
+        if (isNaN(Number(monto)) || Number(monto) <= 0) {
+          throw new Error(
+            "El monto de la transacción debe ser un número positivo",
+          );
+        }
+        const account = getAccountByNumber(cuenta);
+        if (!account) {
+          throw new Error(`La cuenta ${cuenta} no existe`);
+        }
+        if (!account.activa) {
+          throw new Error(`La cuenta ${cuenta} está desactivada`);
+        }
+        if (tipo === "Retiro" && account.saldo < Number(monto)) {
+          throw new Error(
+            `No hay suficiente saldo en la cuenta ${cuenta} para realizar el retiro`,
+          );
+        }
+        const newTransaction = {
+          id: `TRA-${String(transactionsCount + 1).padStart(3, "0")}`,
+          cuenta,
+          monto: Number(monto),
+          tipo,
+          fecha: new Date(),
+        };
+        createTransaction(newTransaction);
+        updateTransactionsCount(transactionsCount + 1);
+        updateAccount(cuenta, {
+          saldo:
+            tipo === "Consignación"
+              ? account.saldo + Number(monto)
+              : account.saldo - Number(monto),
+        });
+        return newTransaction.id;
+      },
+      info: (id) => {
+        const transaction = getTransactionById(id);
+        const fecha = new Date(transaction.fecha);
+        return [
+          {
+            ID: transaction.id,
+            "Número de cuenta": transaction.cuenta,
+            Monto: currencyFormatter.format(transaction.monto),
+            Tipo: transaction.tipo,
+            Fecha: fecha.toLocaleString("es-ES"),
+          },
+        ];
+      },
+    },
+  },
   "listar/multas": {
     domain: "finanzas.gov",
     requiredParams: [],
@@ -271,6 +390,38 @@ export const endpointDefinitions = {
           Valor: currencyFormatter.format(ticket.valor),
           Estado: ticket.estado,
         })),
+    },
+  },
+  "multas/ciudadano": {
+    domain: "finanzas.gov",
+    requiredParams: ["cedula"],
+    response: {
+      code: 200,
+      message: ({ cedula }) =>
+        `Listado de multas del ciudadano ${cedula} enviado correctamente`,
+      info: ({ cedula }) =>
+        getTicketsByCitizen(cedula).map((ticket) => ({
+          ID: ticket.id,
+          "Cédula del ciudadano": ticket.ciudadano,
+          Descripción: ticket.descripcion,
+          Valor: currencyFormatter.format(ticket.valor),
+          Estado: ticket.estado,
+        })),
+    },
+  },
+  "modificar/multa": {
+    domain: "finanzas.gov",
+    requiredParams: ["id", "estado"],
+    response: {
+      code: 200,
+      message: ({ id }) => `La multa ${id} fue modificada correctamente`,
+      process: ({ id, estado }) => {
+        const ticket = getTicketById(id);
+        if (!ticket) {
+          throw new Error(`La multa ${id} no existe`);
+        }
+        updateTicket(id, { estado });
+      },
     },
   },
 };

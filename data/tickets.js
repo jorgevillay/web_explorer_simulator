@@ -17,16 +17,16 @@ export function initializeTickets() {
     },
     {
       id: "MUL-002",
-      ciudadano: "1023456782",
-      descripcion: "Acceso a zona restringida",
-      valor: 900000,
-      estado: "Pago realizado",
+      ciudadano: "1023456785",
+      descripcion: "Incumplimiento de identificación",
+      valor: 320000,
+      estado: "Anulada",
     },
     {
       id: "MUL-003",
-      ciudadano: "1023456782",
-      descripcion: "Incumplimiento de toque de queda",
-      valor: 600000,
+      ciudadano: "1023456786",
+      descripcion: "Acceso a zona restringida",
+      valor: 750000,
       estado: "Pendiente de cobro",
     },
     {
@@ -38,16 +38,17 @@ export function initializeTickets() {
     },
     {
       id: "MUL-005",
-      ciudadano: "1023456785",
-      descripcion: "Incumplimiento de identificación",
-      valor: 320000,
-      estado: "Anulada",
+      ciudadano: "1023456782",
+      descripcion: "Acceso a zona restringida",
+      valor: 900000,
+      estado: "Pago realizado",
     },
+
     {
       id: "MUL-006",
-      ciudadano: "1023456786",
-      descripcion: "Acceso a zona restringida",
-      valor: 750000,
+      ciudadano: "1023456782",
+      descripcion: "Incumplimiento de toque de queda",
+      valor: 600000,
       estado: "Pendiente de cobro",
     },
   ];

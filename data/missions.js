@@ -54,6 +54,54 @@ export function initializeMissions() {
       ],
       completed: false,
     },
+    {
+      id: 4,
+      goals: [
+        {
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-001&monto=2250000&tipo=Consignación",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
+    {
+      id: 5,
+      goals: [
+        {
+          url: "finanzas.gov/modificar/multa?id=MUL-001&estado=Anulada",
+          executed: false,
+        },
+        {
+          url: "finanzas.gov/modificar/multa?id=MUL-006&estado=Anulada",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
+    {
+      id: 6,
+      goals: [
+        {
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-004&monto=2200000&tipo=Retiro",
+          executed: false,
+        },
+        {
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-007&monto=2200000&tipo=Consignación",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
+    {
+      id: 7,
+      goals: [
+        {
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-007&monto=7300000&tipo=Retiro",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
   ];
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));

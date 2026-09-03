@@ -1,10 +1,12 @@
 const BATTERY_KEY = "battery";
 const CAMERAS_COUNT_KEY = "camerasCount";
 const ALERTS_COUNT_KEY = "alertsCount";
+const TRANSACTIONS_COUNT_KEY = "transactionsCount";
 
 const INITIAL_BATTERY = 100;
 const INITIAL_CAMERAS_COUNT = 7;
 const INITIAL_ALERTS_COUNT = 6;
+const INITIAL_TRANSACTIONS_COUNT = 8;
 
 function initializeStorageItem(key, initialValue) {
   const storageValue = localStorage.getItem(key);
@@ -25,10 +27,12 @@ export function resetStorage() {
   localStorage.removeItem(BATTERY_KEY);
   localStorage.removeItem(CAMERAS_COUNT_KEY);
   localStorage.removeItem(ALERTS_COUNT_KEY);
+  localStorage.removeItem(TRANSACTIONS_COUNT_KEY);
 
   initializeStorageItem(BATTERY_KEY, INITIAL_BATTERY);
   initializeStorageItem(CAMERAS_COUNT_KEY, INITIAL_CAMERAS_COUNT);
   initializeStorageItem(ALERTS_COUNT_KEY, INITIAL_ALERTS_COUNT);
+  initializeStorageItem(TRANSACTIONS_COUNT_KEY, INITIAL_TRANSACTIONS_COUNT);
 }
 
 export function getBattery() {
@@ -49,6 +53,11 @@ export let alertsCount = initializeStorageItem(
   INITIAL_ALERTS_COUNT,
 );
 
+export let transactionsCount = initializeStorageItem(
+  TRANSACTIONS_COUNT_KEY,
+  INITIAL_TRANSACTIONS_COUNT,
+);
+
 export function updateCamerasCount(newCount) {
   updateStorageItem(CAMERAS_COUNT_KEY, newCount);
   camerasCount = newCount;
@@ -57,4 +66,9 @@ export function updateCamerasCount(newCount) {
 export function updateAlertsCount(newCount) {
   updateStorageItem(ALERTS_COUNT_KEY, newCount);
   alertsCount = newCount;
+}
+
+export function updateTransactionsCount(newCount) {
+  updateStorageItem(TRANSACTIONS_COUNT_KEY, newCount);
+  transactionsCount = newCount;
 }
