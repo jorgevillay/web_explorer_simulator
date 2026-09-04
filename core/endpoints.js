@@ -208,6 +208,9 @@ export const endpointDefinitions = {
       code: 200,
       message: ({ id }) => `La alerta ${id} fue modificada correctamente`,
       process: ({ id, nivel }) => {
+        if (["BAJO", "MEDIO", "ALTO"].includes(nivel)) {
+          throw new Error(`El nivel de amenaza ${nivel} no es válido`);
+        }
         const alert = getAlertById(id);
         if (!alert) {
           throw new Error(`La alerta ${id} no existe`);
