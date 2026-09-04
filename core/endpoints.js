@@ -10,6 +10,7 @@ import {
   getAlertById,
   createAlert,
   updateAlert,
+  deleteAlert,
 } from "../data/alerts.js";
 import {
   getAllAccounts,
@@ -89,7 +90,7 @@ export const endpointDefinitions = {
         getAllCameras().map((camera) => ({
           Código: camera.codigo,
           Ubicación: camera.ubicacion,
-          Tipo: camera.tipo,
+          "Tipo de cámara": camera.tipo,
           Activa: camera.activa ? "Sí" : "No",
         })),
     },
@@ -171,6 +172,9 @@ export const endpointDefinitions = {
         if (!camera.activa) {
           throw new Error(`La cámara ${camara} está desactivada`);
         }
+        if (["BAJO", "MEDIO", "ALTO"].includes(nivel)) {
+          throw new Error(`El nivel de amenaza ${nivel} no es válido`);
+        }
         const newAlert = {
           id: `ALT-${String(alertsCount + 1).padStart(3, "0")}`,
           camara,
@@ -209,6 +213,21 @@ export const endpointDefinitions = {
           throw new Error(`La alerta ${id} no existe`);
         }
         updateAlert(id, { nivel });
+      },
+    },
+  },
+  "borrar/alerta": {
+    domain: "vigilancia.gov",
+    requiredParams: ["id"],
+    response: {
+      code: 200,
+      message: ({ id }) => `La alerta ${id} fue eliminada correctamente`,
+      process: ({ id }) => {
+        const alert = getAlertById(id);
+        if (!alert) {
+          throw new Error(`La alerta ${id} no existe`);
+        }
+        deleteAlert(id);
       },
     },
   },
@@ -274,10 +293,8 @@ export const endpointDefinitions = {
             "Hace falta información obligatoria para crear la transacción",
           );
         }
-        if (tipo !== "Consignación" && tipo !== "Retiro") {
-          throw new Error(
-            "El tipo de transacción debe ser 'Consignación' o 'Retiro'",
-          );
+        if (tipo !== "CONSIGNACIÓN" && tipo !== "RETIRO") {
+          throw new Error(`El tipo de transacción ${tipo} no es válido`);
         }
         if (isNaN(Number(monto)) || Number(monto) <= 0) {
           throw new Error(
@@ -291,9 +308,9 @@ export const endpointDefinitions = {
         if (!account.activa) {
           throw new Error(`La cuenta ${cuenta} está desactivada`);
         }
-        if (tipo === "Retiro" && account.saldo < Number(monto)) {
+        if (tipo === "RETIRO" && account.saldo < Number(monto)) {
           throw new Error(
-            `No hay suficiente saldo en la cuenta ${cuenta} para realizar el retiro`,
+            `No hay suficiente saldo en la cuenta ${cuenta} para realizar el RETIRO`,
           );
         }
         const newTransaction = {
@@ -307,7 +324,7 @@ export const endpointDefinitions = {
         updateTransactionsCount(transactionsCount + 1);
         updateAccount(cuenta, {
           saldo:
-            tipo === "Consignación"
+            tipo === "CONSIGNACIÓN"
               ? account.saldo + Number(monto)
               : account.saldo - Number(monto),
         });
@@ -368,6 +385,11 @@ export const endpointDefinitions = {
       code: 200,
       message: ({ id }) => `La multa ${id} fue modificada correctamente`,
       process: ({ id, estado }) => {
+        if (
+          !["ANULADA", "PENDIENTE DE COBRO", "PAGO REALIZADO"].includes(estado)
+        ) {
+          throw new Error(`El estado ${estado} no es válido`);
+        }
         const ticket = getTicketById(id);
         if (!ticket) {
           throw new Error(`La multa ${id} no existe`);
@@ -409,16 +431,33 @@ export const endpointDefinitions = {
         if (!prisoner) {
           throw new Error(`El prisionero ${codigo} no existe`);
         }
-        if (estado === "Liberado") {
-          const cell = getCellByPrisoner(codigo);
-          if (cell) {
+        if (estado) {
+          if (
+            [
+              "EN ESPERA DE PROCESO",
+              "EN JUICIO",
+              "CUMPLIENDO SENTENCIA",
+              "LIBERADO",
+            ].includes(estado)
+          ) {
+            throw new Error(`El estado ${estado} no es válido`);
+          }
+          if (prisoner.estado === "LIBERADO" && estado !== "LIBERADO") {
             throw new Error(
-              `El prisionero ${codigo} no puede ser liberado mientras esté asignado a una celda`,
+              `El prisionero ${codigo} ya fue liberado y no puede cambiar de estado`,
             );
           }
-          updatePrisoner(codigo, { estado });
-        } else if (estado) {
-          updatePrisoner(codigo, { estado });
+          if (prisoner.estado !== "LIBERADO" && estado === "LIBERADO") {
+            const cell = getCellByPrisoner(codigo);
+            if (cell) {
+              throw new Error(
+                `El prisionero ${codigo} no puede ser liberado mientras esté asignado a una celda`,
+              );
+            }
+            updatePrisoner(codigo, { estado });
+          } else if (estado) {
+            updatePrisoner(codigo, { estado });
+          }
         }
         if (oficial) {
           const officer = getOfficerByBadge(oficial);
@@ -501,7 +540,7 @@ export const endpointDefinitions = {
         if (!prisoner) {
           throw new Error(`El prisionero ${prisionero} no existe`);
         }
-        if (prisoner.estado !== "Cumpliendo sentencia") {
+        if (prisoner.estado !== "CUMPLIENDO SENTENCIA") {
           throw new Error(
             `El prisionero ${prisionero} no puede ser asignado a una celda porque no está cumpliendo sentencia`,
           );

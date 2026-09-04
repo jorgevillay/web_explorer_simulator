@@ -13,35 +13,35 @@ export function initializeTickets() {
       ciudadano: "1023456782",
       descripcion: "Alteración del orden",
       valor: 450000,
-      estado: "Pendiente de cobro",
+      estado: "PENDIENTE DE COBRO",
     },
     {
       id: "MUL-002",
       ciudadano: "1023456785",
       descripcion: "Incumplimiento de identificación",
       valor: 320000,
-      estado: "Anulada",
+      estado: "ANULADA",
     },
     {
       id: "MUL-003",
       ciudadano: "1023456786",
       descripcion: "Acceso a zona restringida",
       valor: 750000,
-      estado: "Pendiente de cobro",
+      estado: "PENDIENTE DE COBRO",
     },
     {
       id: "MUL-004",
       ciudadano: "1023456784",
       descripcion: "Estacionamiento no autorizado",
       valor: 180000,
-      estado: "Pago realizado",
+      estado: "PAGO REALIZADO",
     },
     {
       id: "MUL-005",
       ciudadano: "1023456782",
       descripcion: "Acceso a zona restringida",
       valor: 900000,
-      estado: "Pago realizado",
+      estado: "PAGO REALIZADO",
     },
 
     {
@@ -49,7 +49,7 @@ export function initializeTickets() {
       ciudadano: "1023456782",
       descripcion: "Incumplimiento de toque de queda",
       valor: 600000,
-      estado: "Pendiente de cobro",
+      estado: "PENDIENTE DE COBRO",
     },
   ];
 

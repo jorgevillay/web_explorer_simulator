@@ -62,7 +62,7 @@ export function initializeMissions() {
       id: 4,
       goals: [
         {
-          url: "finanzas.gov/crear/transaccion?cuenta=CTA-001&monto=2250000&tipo=Consignación",
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-001&monto=2250000&tipo=CONSIGNACIÓN",
           executed: false,
         },
       ],
@@ -72,11 +72,11 @@ export function initializeMissions() {
       id: 5,
       goals: [
         {
-          url: "finanzas.gov/modificar/multa?id=MUL-001&estado=Anulada",
+          url: "finanzas.gov/modificar/multa?id=MUL-001&estado=ANULADA",
           executed: false,
         },
         {
-          url: "finanzas.gov/modificar/multa?id=MUL-006&estado=Anulada",
+          url: "finanzas.gov/modificar/multa?id=MUL-006&estado=ANULADA",
           executed: false,
         },
       ],
@@ -86,11 +86,11 @@ export function initializeMissions() {
       id: 6,
       goals: [
         {
-          url: "finanzas.gov/crear/transaccion?cuenta=CTA-004&monto=1200000&tipo=Retiro",
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-004&monto=1200000&tipo=RETIRO",
           executed: false,
         },
         {
-          url: "finanzas.gov/crear/transaccion?cuenta=CTA-010&monto=1200000&tipo=Consignación",
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-010&monto=1200000&tipo=CONSIGNACIÓN",
           executed: false,
         },
       ],
@@ -100,7 +100,7 @@ export function initializeMissions() {
       id: 7,
       goals: [
         {
-          url: "finanzas.gov/crear/transaccion?cuenta=CTA-007&monto=7300000&tipo=Retiro",
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-007&monto=7300000&tipo=RETIRO",
           executed: false,
         },
       ],
@@ -114,7 +114,7 @@ export function initializeMissions() {
           executed: false,
         },
         {
-          url: "defensa.gov/modificar/prisionero?codigo=PRI-001&estado=Liberado",
+          url: "defensa.gov/modificar/prisionero?codigo=PRI-001&estado=LIBERADO",
           executed: false,
         },
       ],
@@ -124,7 +124,7 @@ export function initializeMissions() {
       id: 9,
       goals: [
         {
-          url: "defensa.gov/modificar/prisionero?codigo=PRI-002&estado=Cumpliendo sentencia",
+          url: "defensa.gov/modificar/prisionero?codigo=PRI-002&estado=CUMPLIENDO SENTENCIA",
           executed: false,
         },
         {

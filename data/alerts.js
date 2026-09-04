@@ -101,6 +101,20 @@ export function updateAlert(id, updatedData) {
   return alerts[index];
 }
 
+export function deleteAlert(id) {
+  const alerts = getAllAlerts();
+
+  const index = alerts.findIndex((alert) => alert.id === id);
+
+  if (index === -1) {
+    throw new Error(`La alerta ${id} no existe`);
+  }
+
+  alerts.splice(index, 1);
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(alerts));
+}
+
 export function resetAlerts() {
   localStorage.removeItem(STORAGE_KEY);
 

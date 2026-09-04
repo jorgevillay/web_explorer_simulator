@@ -11,7 +11,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-005",
       ciudadano: "1023456789",
-      estado: "En juicio",
+      estado: "EN JUICIO",
       fechaCaptura: "2087-06-12",
       cargos: "Distribución de información restringida",
       oficial: "OFI-004",
@@ -19,7 +19,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-002",
       ciudadano: "1023456781",
-      estado: "En espera de proceso",
+      estado: "EN ESPERA DE PROCESO",
       fechaCaptura: "2087-06-14",
       cargos: "Alteración del orden",
       oficial: "OFI-003",
@@ -27,7 +27,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-006",
       ciudadano: "1023456785",
-      estado: "En juicio",
+      estado: "EN JUICIO",
       fechaCaptura: "2087-06-08",
       cargos: "Desobediencia a la autoridad",
       oficial: "OFI-004",
@@ -35,7 +35,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-001",
       ciudadano: "1023456786",
-      estado: "Cumpliendo sentencia",
+      estado: "CUMPLIENDO SENTENCIA",
       fechaCaptura: "2087-06-11",
       cargos: "Conspiración para cometer delitos",
       oficial: "OFI-001",
@@ -43,7 +43,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-004",
       ciudadano: "1023456783",
-      estado: "En espera de proceso",
+      estado: "EN ESPERA DE PROCESO",
       fechaCaptura: "2087-06-15",
       cargos: "Acceso a información restringida",
       oficial: "OFI-003",
@@ -51,7 +51,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-003",
       ciudadano: "1023456782",
-      estado: "Cumpliendo sentencia",
+      estado: "CUMPLIENDO SENTENCIA",
       fechaCaptura: "2087-06-09",
       cargos: "Sabotaje de infraestructura",
       oficial: "OFI-002",
@@ -59,7 +59,7 @@ export function initializePrisoners() {
     {
       codigo: "PRI-007",
       ciudadano: "1023456788",
-      estado: "En espera de proceso",
+      estado: "EN ESPERA DE PROCESO",
       fechaCaptura: "2087-06-10",
       cargos: "Interferencia con sistema gubernamental",
       oficial: "OFI-002",
