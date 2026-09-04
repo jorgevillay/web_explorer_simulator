@@ -46,7 +46,7 @@ export function initializeCitizens() {
       fechaNacimiento: "2051-09-30",
       sexo: "F",
       estadoCivil: "Divorciada",
-      ubicacion: "Zona norte",
+      ubicacion: "Zona este",
     },
     {
       cedula: "1023456789",

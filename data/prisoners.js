@@ -14,7 +14,7 @@ export function initializePrisoners() {
       estado: "En juicio",
       fechaCaptura: "2087-06-12",
       cargos: "Distribución de información restringida",
-      oficial: "OFI-001",
+      oficial: "OFI-004",
     },
     {
       codigo: "PRI-002",
@@ -46,7 +46,7 @@ export function initializePrisoners() {
       estado: "En espera de proceso",
       fechaCaptura: "2087-06-15",
       cargos: "Acceso a información restringida",
-      oficial: "OFI-002",
+      oficial: "OFI-003",
     },
     {
       codigo: "PRI-003",
@@ -54,6 +54,14 @@ export function initializePrisoners() {
       estado: "Cumpliendo sentencia",
       fechaCaptura: "2087-06-09",
       cargos: "Sabotaje de infraestructura",
+      oficial: "OFI-002",
+    },
+    {
+      codigo: "PRI-007",
+      ciudadano: "1023456788",
+      estado: "En espera de proceso",
+      fechaCaptura: "2087-06-10",
+      cargos: "Interferencia con sistema gubernamental",
       oficial: "OFI-002",
     },
   ];
@@ -95,6 +103,20 @@ export function updatePrisoner(codigo, updatedData) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(prisoners));
 
   return prisoners[index];
+}
+
+export function deletePrisoner(codigo) {
+  const prisoners = getAllPrisoners();
+
+  const index = prisoners.findIndex((prisoner) => prisoner.codigo === codigo);
+
+  if (index === -1) {
+    throw new Error(`El prisionero ${codigo} no existe`);
+  }
+
+  prisoners.splice(index, 1);
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(prisoners));
 }
 
 export function resetPrisoners() {

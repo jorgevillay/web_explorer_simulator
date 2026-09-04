@@ -12,7 +12,7 @@ export function initializeMissions() {
       id: 1,
       goals: [
         {
-          url: "vigilancia.gov/desactivar/camara?codigo=CAM-006",
+          url: "vigilancia.gov/desactivar/camara?codigo=CAM-007",
           executed: false,
         },
         {
@@ -51,6 +51,10 @@ export function initializeMissions() {
           url: "vigilancia.gov/modificar/alerta?id=ALT-001&nivel=BAJO",
           executed: false,
         },
+        {
+          url: "vigilancia.gov/modificar/alerta?id=ALT-005&nivel=BAJO",
+          executed: false,
+        },
       ],
       completed: false,
     },
@@ -82,11 +86,11 @@ export function initializeMissions() {
       id: 6,
       goals: [
         {
-          url: "finanzas.gov/crear/transaccion?cuenta=CTA-004&monto=2200000&tipo=Retiro",
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-004&monto=1200000&tipo=Retiro",
           executed: false,
         },
         {
-          url: "finanzas.gov/crear/transaccion?cuenta=CTA-007&monto=2200000&tipo=Consignación",
+          url: "finanzas.gov/crear/transaccion?cuenta=CTA-010&monto=1200000&tipo=Consignación",
           executed: false,
         },
       ],
@@ -106,7 +110,7 @@ export function initializeMissions() {
       id: 8,
       goals: [
         {
-          url: "defensa.gov/liberar/celda?numero=CEL-001",
+          url: "defensa.gov/liberar/celda?numero=CEL-007",
           executed: false,
         },
         {
@@ -135,6 +139,16 @@ export function initializeMissions() {
       goals: [
         {
           url: "defensa.gov/borrar/oficial?placa=OFI-002",
+          executed: false,
+        },
+      ],
+      completed: false,
+    },
+    {
+      id: 11,
+      goals: [
+        {
+          url: "defensa.gov/borrar/prisionero?codigo=PRI-004",
           executed: false,
         },
       ],

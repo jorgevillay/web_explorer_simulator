@@ -24,7 +24,7 @@ import {
   getEndpointDefinition,
 } from "./utils/url.js";
 
-const BATTERY_COST = 2;
+const BATTERY_COST = 1;
 let gameEnded = false;
 let battery = getBattery();
 
@@ -159,7 +159,7 @@ function endGameAsSuccess() {
     "Todas las misiones se completaron correctamente.\n" +
       "Nivel de batería: Restante " +
       battery +
-      "% VS. Óptimo 60%\n" +
+      "% VS. Óptimo 56%\n" +
       "La partida ha finalizado.",
   );
 }

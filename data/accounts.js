@@ -22,9 +22,9 @@ export function initializeAccounts() {
     },
     {
       numero: "CTA-003",
-      cliente: "1023456782",
+      cliente: "1023456783",
       saldo: 3400000,
-      activa: true,
+      activa: false,
     },
     {
       numero: "CTA-004",
@@ -64,9 +64,9 @@ export function initializeAccounts() {
     },
     {
       numero: "CTA-010",
-      cliente: "1023456786",
+      cliente: "1023456783",
       saldo: 900000,
-      activa: false,
+      activa: true,
     },
   ];
 

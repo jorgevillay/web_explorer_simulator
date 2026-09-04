@@ -36,6 +36,7 @@ import {
   getPrisonerByCode,
   getPrisonersByOfficer,
   updatePrisoner,
+  deletePrisoner,
 } from "../data/prisoners.js";
 import {
   getAllCells,
@@ -492,6 +493,28 @@ export const endpointDefinitions = {
           }
           updatePrisoner(codigo, { oficial });
         }
+      },
+    },
+  },
+  "borrar/prisionero": {
+    domain: "defensa.gov",
+    requiredParams: ["codigo"],
+    response: {
+      code: 200,
+      message: ({ codigo }) =>
+        `El prisionero ${codigo} fue eliminado correctamente`,
+      process: ({ codigo }) => {
+        const prisoner = getPrisonerByCode(codigo);
+        if (!prisoner) {
+          throw new Error(`El prisionero ${codigo} no existe`);
+        }
+        const cell = getCellByPrisoner(codigo);
+        if (cell) {
+          throw new Error(
+            `El prisionero ${codigo} no puede ser eliminado mientras esté asignado a una celda`,
+          );
+        }
+        deletePrisoner(codigo);
       },
     },
   },

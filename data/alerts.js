@@ -11,42 +11,42 @@ export function initializeAlerts() {
     {
       id: "ALT-001",
       camara: "CAM-006",
-      nivel: "Alto",
+      nivel: "ALTO",
       descripcion: "Movimiento no identificado",
       fecha: "2087-06-14 22:18",
     },
     {
       id: "ALT-002",
       camara: "CAM-001",
-      nivel: "Medio",
+      nivel: "MEDIO",
       descripcion: "Actividad recurrente detectada",
       fecha: "2087-06-15 16:42",
     },
     {
       id: "ALT-003",
       camara: "CAM-002",
-      nivel: "Bajo",
+      nivel: "BAJO",
       descripcion: "Objeto abandonado",
       fecha: "2087-06-15 10:27",
     },
     {
       id: "ALT-004",
       camara: "CAM-003",
-      nivel: "Medio",
+      nivel: "MEDIO",
       descripcion: "Acceso a zona restringida",
       fecha: "2087-06-15 14:05",
     },
     {
       id: "ALT-005",
       camara: "CAM-005",
-      nivel: "Bajo",
+      nivel: "ALTO",
       descripcion: "Movimiento detectado",
-      fecha: "2087-06-15 18:31",
+      fecha: "2087-06-15 19:31",
     },
     {
       id: "ALT-006",
       camara: "CAM-002",
-      nivel: "Bajo",
+      nivel: "BAJO",
       descripcion: "Presencia no identificada",
       fecha: "2087-06-14 21:36",
     },
@@ -104,15 +104,15 @@ export function updateAlert(id, updatedData) {
 export function deleteAlert(id) {
   const alerts = getAllAlerts();
 
-  const filtered = alerts.filter((alert) => alert.id !== id);
+  const index = alerts.findIndex((alert) => alert.id === id);
 
-  if (filtered.length === alerts.length) {
+  if (index === -1) {
     throw new Error(`La alerta ${id} no existe`);
   }
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+  alerts.splice(index, 1);
 
-  return true;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(alerts));
 }
 
 export function resetAlerts() {

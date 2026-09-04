@@ -41,14 +41,14 @@ export function initializeTransactions() {
       cuenta: "CTA-007",
       monto: 3500000,
       tipo: "Retiro",
-      fecha: "2087-06-15 08:13",
+      fecha: "2087-06-15 20:13",
     },
     {
       id: "TRA-006",
       cuenta: "CTA-008",
-      monto: 2800000,
+      monto: 3800000,
       tipo: "Retiro",
-      fecha: "2087-06-15 09:05",
+      fecha: "2087-06-15 21:05",
     },
     {
       id: "TRA-007",
@@ -62,7 +62,7 @@ export function initializeTransactions() {
       cuenta: "CTA-010",
       monto: 3800000,
       tipo: "Consignación",
-      fecha: "2087-06-15 10:21",
+      fecha: "2087-06-15 22:21",
     },
   ];
 

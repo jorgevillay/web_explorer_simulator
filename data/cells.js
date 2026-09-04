@@ -27,13 +27,13 @@ export function initializeCells() {
       sector: "Patio",
     },
     {
-      numero: "CEL-001",
+      numero: "CEL-007",
       prisionero: "PRI-001",
       seguridad: "Celda individual",
       sector: "Pabellón interno",
     },
     {
-      numero: "CEL-007",
+      numero: "CEL-001",
       prisionero: null,
       seguridad: "Dormitorio",
       sector: "Pabellón central",
