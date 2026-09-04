@@ -79,14 +79,6 @@ export function getTransactionById(id) {
   return transactions.find((transaction) => transaction.id === id);
 }
 
-export function getTransactionsByAccount(accountNumber) {
-  const transactions = getAllTransactions();
-
-  return transactions.filter(
-    (transaction) => transaction.cuenta === accountNumber,
-  );
-}
-
 export function createTransaction(transactionData) {
   const transactions = getAllTransactions();
 

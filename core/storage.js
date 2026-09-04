@@ -1,5 +1,4 @@
 const BATTERY_KEY = "battery";
-const CAMERAS_COUNT_KEY = "camerasCount";
 const ALERTS_COUNT_KEY = "alertsCount";
 const TRANSACTIONS_COUNT_KEY = "transactionsCount";
 
@@ -43,11 +42,6 @@ export function updateBattery(newBattery) {
   updateStorageItem(BATTERY_KEY, newBattery);
 }
 
-export let camerasCount = initializeStorageItem(
-  CAMERAS_COUNT_KEY,
-  INITIAL_CAMERAS_COUNT,
-);
-
 export let alertsCount = initializeStorageItem(
   ALERTS_COUNT_KEY,
   INITIAL_ALERTS_COUNT,
@@ -57,11 +51,6 @@ export let transactionsCount = initializeStorageItem(
   TRANSACTIONS_COUNT_KEY,
   INITIAL_TRANSACTIONS_COUNT,
 );
-
-export function updateCamerasCount(newCount) {
-  updateStorageItem(CAMERAS_COUNT_KEY, newCount);
-  camerasCount = newCount;
-}
 
 export function updateAlertsCount(newCount) {
   updateStorageItem(ALERTS_COUNT_KEY, newCount);

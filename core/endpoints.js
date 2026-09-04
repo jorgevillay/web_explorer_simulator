@@ -2,7 +2,6 @@ import { getAllCitizens } from "../data/citizens.js";
 import {
   getAllCameras,
   getCameraByCode,
-  createCamera,
   enableCamera,
   disableCamera,
 } from "../data/cameras.js";
@@ -11,7 +10,6 @@ import {
   getAlertById,
   createAlert,
   updateAlert,
-  deleteAlert,
 } from "../data/alerts.js";
 import {
   getAllAccounts,
@@ -22,7 +20,6 @@ import {
 import {
   getAllTransactions,
   getTransactionById,
-  getTransactionsByAccount,
   createTransaction,
 } from "../data/transactions.js";
 import {
@@ -50,10 +47,8 @@ import {
   deleteOfficer,
 } from "../data/police.js";
 import {
-  camerasCount,
   alertsCount,
   transactionsCount,
-  updateCamerasCount,
   updateAlertsCount,
   updateTransactionsCount,
 } from "./storage.js";
@@ -97,36 +92,6 @@ export const endpointDefinitions = {
           Tipo: camera.tipo,
           Activa: camera.activa ? "Sí" : "No",
         })),
-    },
-  },
-  "agregar/camara": {
-    domain: "vigilancia.gov",
-    requiredParams: ["ubicacion", "tipo"],
-    response: {
-      code: 200,
-      message: () => "Nueva cámara registrada correctamente",
-      process: ({ ubicacion, tipo }) => {
-        const newCamera = {
-          codigo: `CAM-${String(camerasCount + 1).padStart(3, "0")}`,
-          ubicacion,
-          tipo,
-          activa: true,
-        };
-        createCamera(newCamera);
-        updateCamerasCount(camerasCount + 1);
-        return newCamera.codigo;
-      },
-      info: (codigo) => {
-        const camera = getCameraByCode(codigo);
-        return [
-          {
-            Código: camera.codigo,
-            Ubicación: camera.ubicacion,
-            Tipo: camera.tipo,
-            Activa: camera.activa ? "Sí" : "No",
-          },
-        ];
-      },
     },
   },
   "activar/camara": {
@@ -247,17 +212,6 @@ export const endpointDefinitions = {
       },
     },
   },
-  "borrar/alerta": {
-    domain: "vigilancia.gov",
-    requiredParams: ["id"],
-    response: {
-      code: 200,
-      message: ({ id }) => `La alerta ${id} fue eliminada correctamente`,
-      process: ({ id }) => {
-        deleteAlert(id);
-      },
-    },
-  },
   "listar/cuentas": {
     domain: "finanzas.gov",
     requiredParams: [],
@@ -297,26 +251,6 @@ export const endpointDefinitions = {
       message: () => "Listado de transacciones enviado correctamente",
       info: () =>
         getAllTransactions().map((transaction) => {
-          const fecha = new Date(transaction.fecha);
-          return {
-            ID: transaction.id,
-            "Número de cuenta": transaction.cuenta,
-            Monto: currencyFormatter.format(transaction.monto),
-            Tipo: transaction.tipo,
-            Fecha: fecha.toLocaleString("es-ES"),
-          };
-        }),
-    },
-  },
-  "transacciones/cuenta": {
-    domain: "finanzas.gov",
-    requiredParams: ["numero"],
-    response: {
-      code: 200,
-      message: ({ numero }) =>
-        `Listado de transacciones para la cuenta ${numero} enviado correctamente`,
-      info: ({ numero }) =>
-        getTransactionsByAccount(numero).map((transaction) => {
           const fecha = new Date(transaction.fecha);
           return {
             ID: transaction.id,

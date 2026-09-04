@@ -65,22 +65,6 @@ export function getCameraByCode(codigo) {
   return cameras.find((camera) => camera.codigo === codigo);
 }
 
-export function createCamera(cameraData) {
-  const cameras = getAllCameras();
-
-  const exists = cameras.some((camera) => camera.codigo === cameraData.codigo);
-
-  if (exists) {
-    throw new Error(`La cámara ${cameraData.codigo} ya existe`);
-  }
-
-  cameras.push(cameraData);
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(cameras));
-
-  return cameraData;
-}
-
 export function updateCamera(codigo, updatedData) {
   const cameras = getAllCameras();
 
