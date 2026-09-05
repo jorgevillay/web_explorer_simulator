@@ -42,7 +42,6 @@ const modalTitle = document.querySelector("#modal-title");
 const modalMessage = document.querySelector("#modal-message");
 const modalRestart = document.querySelector("#modal-restart");
 
-// ---------- MISIONES ----------
 let missions = initializeMissions();
 const missionProgressList = document.querySelector("#mission-progress-list");
 const missionProgressText = document.querySelector("#mission-progress-text");
@@ -59,7 +58,7 @@ function initializeMissionProgress() {
 
     indicator.classList.add("mission-indicator");
     indicator.dataset.missionId = mission.id;
-    indicator.textContent = String(mission.id).padStart(2, "0");
+    indicator.textContent = mission.id;
 
     missionProgressList.appendChild(indicator);
   });
@@ -88,7 +87,6 @@ function updateMissionProgressIndicator() {
     indicator.classList.toggle("completed", mission.completed);
   });
 }
-// --------------------
 
 function enableExecuteButton() {
   if (!endpointInput.value.trim()) executeButton.disabled = true;
@@ -211,7 +209,7 @@ function executeEndpoint() {
   if (!endpoint) {
     renderResponse({
       code: 404,
-      message: () => "No existe información para la dirección consultada",
+      message: () => "No existe la operación en el sistema",
     });
     checkBatteryAfterExecution();
     return;

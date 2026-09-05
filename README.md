@@ -8,10 +8,10 @@ de las misiones.
 
 Actualmente el simulador integra tres sistemas principales:
 
--   **Registro** (`registro.gov`): información de ciudadanos.
--   **Vigilancia** (`vigilancia.gov`): cámaras y alertas.
--   **Finanzas** (`finanzas.gov`): cuentas, transacciones y multas.
--   **Defensa** (`defensa.gov`): prisioneros, celdas y oficiales.
+- **Registro** (`registro.gov`): información de ciudadanos.
+- **Vigilancia** (`vigilancia.gov`): cámaras y alertas.
+- **Finanzas** (`finanzas.gov`): cuentas, transacciones y multas.
+- **Defensa** (`defensa.gov`): prisioneros, celdas y oficiales.
 
 La partida está compuesta por **11 misiones**.
 
@@ -24,7 +24,7 @@ razón debe ejecutarse desde un servidor local y no abriendo directamente
 Una opción sencilla, teniendo Node.js instalado, es ejecutar desde la
 raíz del proyecto:
 
-``` bash
+```bash
 npx serve .
 ```
 
@@ -36,7 +36,7 @@ Server** en Visual Studio Code.
 
 ## Estructura del proyecto
 
-``` text
+```text
 web_explorer_simulator/
 ├── index.html
 ├── styles.css
@@ -65,13 +65,13 @@ web_explorer_simulator/
 
 Contiene la estructura visual principal:
 
--   Estado del sistema y batería.
--   Indicador global de progreso.
--   Campo para ingresar la URL.
--   Botón para ejecutar consultas.
--   Código y mensaje de respuesta.
--   Tabla de información recuperada.
--   Modal de finalización de partida.
+- Estado del sistema y batería.
+- Indicador global de progreso.
+- Campo para ingresar la URL.
+- Botón para ejecutar consultas.
+- Código y mensaje de respuesta.
+- Tabla de información recuperada.
+- Modal de finalización de partida.
 
 El archivo carga `script.js` mediante `type="module"`.
 
@@ -80,13 +80,13 @@ El archivo carga `script.js` mediante `type="module"`.
 Define la apariencia futurista/gubernamental de la herramienta,
 incluyendo:
 
--   Panel principal.
--   Estados visuales de batería.
--   Indicadores de progreso.
--   Códigos de respuesta.
--   Tablas de resultados.
--   Modal de finalización.
--   Diseño adaptable.
+- Panel principal.
+- Estados visuales de batería.
+- Indicadores de progreso.
+- Códigos de respuesta.
+- Tablas de resultados.
+- Modal de finalización.
+- Diseño adaptable.
 
 ### `script.js`
 
@@ -95,14 +95,14 @@ módulos de datos y lógica.
 
 Sus responsabilidades principales son:
 
--   Inicializar los datos de la partida.
--   Ejecutar las consultas ingresadas.
--   Consumir y actualizar la batería.
--   Mostrar las respuestas.
--   Actualizar los objetivos y misiones completadas.
--   Actualizar el indicador global de progreso.
--   Detectar victoria o batería agotada.
--   Reiniciar la partida.
+- Inicializar los datos de la partida.
+- Ejecutar las consultas ingresadas.
+- Consumir y actualizar la batería.
+- Mostrar las respuestas.
+- Actualizar los objetivos y misiones completadas.
+- Actualizar el indicador global de progreso.
+- Detectar victoria o batería agotada.
+- Reiniciar la partida.
 
 Actualmente cada consulta consume **1% de batería**.
 
@@ -110,10 +110,10 @@ Actualmente cada consulta consume **1% de batería**.
 
 Gestiona valores generales persistidos en `localStorage`, incluyendo:
 
--   Batería.
--   Contador de alertas.
--   Contador de transacciones.
--   Reinicio de los valores generales de la partida.
+- Batería.
+- Contador de alertas.
+- Contador de transacciones.
+- Reinicio de los valores generales de la partida.
 
 ### `core/endpoints.js`
 
@@ -122,13 +122,13 @@ reconoce el simulador.
 
 Cada definición puede indicar:
 
--   Dominio esperado.
--   Parámetros requeridos.
--   Parámetros opcionales, cuando corresponda.
--   Código de respuesta.
--   Mensaje.
--   Proceso que modifica los datos.
--   Información que debe mostrarse como resultado.
+- Dominio esperado.
+- Parámetros requeridos.
+- Parámetros opcionales, cuando corresponda.
+- Código de respuesta.
+- Mensaje.
+- Proceso que modifica los datos.
+- Información que debe mostrarse como resultado.
 
 Este archivo conecta las URLs ingresadas con las operaciones definidas
 en los módulos de `data/`.
@@ -137,12 +137,12 @@ en los módulos de `data/`.
 
 Contiene las utilidades relacionadas con las URLs:
 
--   `validateUrlSyntax`: valida la estructura general.
--   `parseUrl`: separa dominio, ruta y parámetros.
--   `normalizeUrl`: ordena los parámetros para poder comparar URLs
-    independientemente de su orden.
--   `getEndpointDefinition`: identifica el endpoint y valida su dominio
-    y parámetros requeridos.
+- `validateUrlSyntax`: valida la estructura general.
+- `parseUrl`: separa dominio, ruta y parámetros.
+- `normalizeUrl`: ordena los parámetros para poder comparar URLs
+  independientemente de su orden.
+- `getEndpointDefinition`: identifica el endpoint y valida su dominio
+  y parámetros requeridos.
 
 ## Datos
 
@@ -212,7 +212,7 @@ Define y persiste las **11 misiones** de la partida.
 
 Cada misión tiene uno o más objetivos (`goals`). Un objetivo almacena:
 
-``` js
+```js
 {
   url: "vigilancia.gov/desactivar/camara?codigo=CAM-007",
   executed: false
@@ -249,13 +249,13 @@ El flujo general es:
 
 Las consultas se escriben sin protocolo:
 
-``` text
+```text
 vigilancia.gov/listar/camaras
 ```
 
 Una consulta con parámetros utiliza `?` y `&`:
 
-``` text
+```text
 vigilancia.gov/crear/alerta?camara=CAM-003&nivel=ALTO&descripcion=Actividad sospechosa
 ```
 
@@ -267,13 +267,13 @@ la comparación.
 
 ### Registro --- `registro.gov`
 
-``` text
+```text
 listar/ciudadanos
 ```
 
 ### Vigilancia --- `vigilancia.gov`
 
-``` text
+```text
 listar/camaras
 activar/camara?codigo=[valor]
 desactivar/camara?codigo=[valor]
@@ -286,7 +286,7 @@ borrar/alerta?id=[valor]
 
 ### Finanzas --- `finanzas.gov`
 
-``` text
+```text
 listar/cuentas
 cuentas/cliente?cedula=[valor]
 
@@ -300,7 +300,7 @@ modificar/multa?id=[valor]&estado=[valor]
 
 ### Defensa --- `defensa.gov`
 
-``` text
+```text
 listar/prisioneros
 modificar/prisionero?codigo=[valor]&estado=[valor]
 borrar/prisionero?codigo=[valor]
@@ -321,21 +321,25 @@ borrar/oficial?placa=[valor]
 
 La interfaz utiliza los siguientes códigos principales:
 
-  -----------------------------------------------------------------------
-  Código                              Uso
-  ----------------------------------- -----------------------------------
-  `200`                               Consulta ejecutada correctamente.
+---
 
-  `400`                               La URL, dominio o parámetros no
-                                      cumplen las condiciones esperadas.
+Código Uso
 
-  `404`                               No existe un endpoint para la
-                                      dirección consultada.
+---
 
-  `500`                               La operación no puede completarse
-                                      por una condición de los datos o
-                                      una restricción del sistema.
-  -----------------------------------------------------------------------
+`200` Consulta ejecutada correctamente.
+
+`400` La URL, dominio o parámetros no
+cumplen las condiciones esperadas.
+
+`404` No existe un endpoint para la
+dirección consultada.
+
+`500` La operación no puede completarse
+por una condición de los datos o
+una restricción del sistema.
+
+---
 
 Los errores generados durante los procesos de un endpoint se presentan
 como respuestas `500`.
@@ -344,11 +348,11 @@ como respuestas `500`.
 
 El progreso global se muestra en la interfaz mediante:
 
--   Número de misiones completadas.
--   Total de misiones.
--   Porcentaje de progreso.
--   Indicador individual para cada misión.
--   Barra de progreso.
+- Número de misiones completadas.
+- Total de misiones.
+- Porcentaje de progreso.
+- Indicador individual para cada misión.
+- Barra de progreso.
 
 El estado se guarda en `localStorage`, por lo que permanece disponible
 al recargar la página hasta iniciar una nueva partida.
@@ -357,47 +361,51 @@ al recargar la página hasta iniciar una nueva partida.
 
 La aplicación utiliza actualmente las siguientes claves:
 
-  -----------------------------------------------------------------------
-  Clave                               Contenido
-  ----------------------------------- -----------------------------------
-  `ciudadanos`                        Ciudadanos registrados.
+---
 
-  `cameras`                           Cámaras del sistema de vigilancia.
+Clave Contenido
 
-  `alerts`                            Alertas registradas.
+---
 
-  `cuentas`                           Cuentas financieras.
+`ciudadanos` Ciudadanos registrados.
 
-  `transacciones`                     Transacciones financieras.
+`cameras` Cámaras del sistema de vigilancia.
 
-  `multas`                            Multas de ciudadanos.
+`alerts` Alertas registradas.
 
-  `prisioneros`                       Prisioneros.
+`cuentas` Cuentas financieras.
 
-  `celdas`                            Celdas y asignaciones.
+`transacciones` Transacciones financieras.
 
-  `oficiales`                         Oficiales.
+`multas` Multas de ciudadanos.
 
-  `missions`                          Estado de objetivos y misiones.
+`prisioneros` Prisioneros.
 
-  `battery`                           Batería restante.
+`celdas` Celdas y asignaciones.
 
-  `alertsCount`                       Contador para generar nuevos IDs de
-                                      alertas.
+`oficiales` Oficiales.
 
-  `transactionsCount`                 Contador para generar nuevos IDs de
-                                      transacciones.
-  -----------------------------------------------------------------------
+`missions` Estado de objetivos y misiones.
+
+`battery` Batería restante.
+
+`alertsCount` Contador para generar nuevos IDs de
+alertas.
+
+`transactionsCount` Contador para generar nuevos IDs de
+transacciones.
+
+---
 
 ## Reinicio de partida
 
 El botón **NUEVA PARTIDA** restablece:
 
--   Datos iniciales de las entidades.
--   Batería.
--   Contadores.
--   Progreso de las misiones.
--   Estado visual de la interfaz.
+- Datos iniciales de las entidades.
+- Batería.
+- Contadores.
+- Progreso de las misiones.
+- Estado visual de la interfaz.
 
 Después del reinicio se puede comenzar una nueva partida desde el estado
 inicial.
@@ -408,9 +416,9 @@ Las misiones se configuran en `data/missions.js`.
 
 Ejemplo:
 
-``` js
+```js
 {
-  id: 12,
+  id: "COD-###",
   goals: [
     {
       url: "defensa.gov/liberar/celda?numero=CEL-001",
@@ -435,7 +443,7 @@ Los endpoints se definen en `core/endpoints.js`.
 
 La estructura general es:
 
-``` js
+```js
 "ruta/endpoint": {
   domain: "sistema.gov",
   requiredParams: ["parametro"],

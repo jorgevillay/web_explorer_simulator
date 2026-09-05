@@ -9,7 +9,7 @@ export function initializeMissions() {
 
   const initialData = [
     {
-      id: 1,
+      id: "VIG-01",
       goals: [
         {
           url: "vigilancia.gov/desactivar/camara?codigo=CAM-007",
@@ -27,7 +27,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 2,
+      id: "VIG-02",
       goals: [
         {
           url: "vigilancia.gov/crear/alerta?camara=CAM-003&nivel=ALTO&descripcion=Actividad sospechosa",
@@ -45,7 +45,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 3,
+      id: "VIG-03",
       goals: [
         {
           url: "vigilancia.gov/modificar/alerta?id=ALT-001&nivel=BAJO",
@@ -59,7 +59,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 4,
+      id: "FIN-01",
       goals: [
         {
           url: "finanzas.gov/crear/transaccion?cuenta=CTA-001&monto=2250000&tipo=CONSIGNACIÓN",
@@ -69,7 +69,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 5,
+      id: "FIN-02",
       goals: [
         {
           url: "finanzas.gov/modificar/multa?id=MUL-001&estado=ANULADA",
@@ -83,7 +83,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 6,
+      id: "FIN-03",
       goals: [
         {
           url: "finanzas.gov/crear/transaccion?cuenta=CTA-004&monto=1200000&tipo=RETIRO",
@@ -97,7 +97,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 7,
+      id: "FIN-04",
       goals: [
         {
           url: "finanzas.gov/crear/transaccion?cuenta=CTA-007&monto=7300000&tipo=RETIRO",
@@ -107,7 +107,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 8,
+      id: "DEF-01",
       goals: [
         {
           url: "defensa.gov/liberar/celda?numero=CEL-007",
@@ -121,7 +121,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 9,
+      id: "DEF-02",
       goals: [
         {
           url: "defensa.gov/modificar/prisionero?codigo=PRI-002&estado=CUMPLIENDO SENTENCIA",
@@ -135,7 +135,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 10,
+      id: "DEF-03",
       goals: [
         {
           url: "defensa.gov/borrar/oficial?placa=OFI-002",
@@ -145,7 +145,7 @@ export function initializeMissions() {
       completed: false,
     },
     {
-      id: 11,
+      id: "DEF-04",
       goals: [
         {
           url: "defensa.gov/borrar/prisionero?codigo=PRI-004",

@@ -75,7 +75,7 @@ export const endpointDefinitions = {
             "Fecha de nacimiento": fecha.toLocaleString("es-ES"),
             Sexo: citizen.sexo,
             "Estado civil": citizen.estadoCivil,
-            Ubicación: citizen.ubicacion,
+            Dirección: citizen.ubicacion,
           };
         }),
     },
@@ -172,7 +172,7 @@ export const endpointDefinitions = {
         if (!camera.activa) {
           throw new Error(`La cámara ${camara} está desactivada`);
         }
-        if (["BAJO", "MEDIO", "ALTO"].includes(nivel)) {
+        if (!["BAJO", "MEDIO", "ALTO"].includes(nivel)) {
           throw new Error(`El nivel de amenaza ${nivel} no es válido`);
         }
         const newAlert = {
@@ -208,7 +208,7 @@ export const endpointDefinitions = {
       code: 200,
       message: ({ id }) => `La alerta ${id} fue modificada correctamente`,
       process: ({ id, nivel }) => {
-        if (["BAJO", "MEDIO", "ALTO"].includes(nivel)) {
+        if (!["BAJO", "MEDIO", "ALTO"].includes(nivel)) {
           throw new Error(`El nivel de amenaza ${nivel} no es válido`);
         }
         const alert = getAlertById(id);
@@ -296,7 +296,7 @@ export const endpointDefinitions = {
             "Hace falta información obligatoria para crear la transacción",
           );
         }
-        if (tipo !== "CONSIGNACIÓN" && tipo !== "RETIRO") {
+        if (!["CONSIGNACIÓN", "RETIRO"].includes(tipo)) {
           throw new Error(`El tipo de transacción ${tipo} no es válido`);
         }
         if (isNaN(Number(monto)) || Number(monto) <= 0) {
@@ -436,7 +436,7 @@ export const endpointDefinitions = {
         }
         if (estado) {
           if (
-            [
+            ![
               "EN ESPERA DE PROCESO",
               "EN JUICIO",
               "CUMPLIENDO SENTENCIA",
