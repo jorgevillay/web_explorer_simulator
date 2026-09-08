@@ -1,4 +1,5 @@
 const BATTERY_KEY = "battery";
+const CAMERAS_COUNT_KEY = "camerasCount";
 const ALERTS_COUNT_KEY = "alertsCount";
 const TRANSACTIONS_COUNT_KEY = "transactionsCount";
 
